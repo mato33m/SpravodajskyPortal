@@ -1,0 +1,89 @@
+<div class="article-form-container">
+
+  <div class="article-form-card">
+
+    <a routerLink="/articles" class="back-link">
+      ← Späť na články
+    </a>
+
+    <h1>Upraviť článok</h1>
+
+    @if (article) {
+
+      <form (ngSubmit)="saveArticle()">
+
+        <div class="form-group">
+          <label>Nadpis</label>
+
+          <input
+            type="text"
+            [(ngModel)]="article.title"
+            name="title"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label>Téma</label>
+
+          <select
+            [(ngModel)]="article.topicName"
+            name="topicName">
+
+            <option value="Technológie">Technológie</option>
+            <option value="Veda">Veda</option>
+            <option value="História">História</option>
+            <option value="Svetové správy">Svetové správy</option>
+
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>URL obrázka</label>
+
+          <input
+            type="text"
+            [(ngModel)]="article.imageUrl"
+            name="imageUrl">
+        </div>
+
+        <div class="form-group">
+          <label>Tagy (voliteľné)</label>
+
+          <input
+            type="text"
+            [(ngModel)]="tagInput"
+            name="tags"
+            placeholder="napr. politika, história, svet">
+
+          <small class="hint">
+            Tagy oddel čiarkou.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>Obsah článku</label>
+
+          <textarea
+            [(ngModel)]="article.content"
+            name="content"
+            required>
+          </textarea>
+        </div>
+
+        <button type="submit" class="publish-btn">
+          Uložiť zmeny
+        </button>
+
+      </form>
+
+    } @else {
+
+      <div class="loading">
+        Načítavam článok...
+      </div>
+
+    }
+
+  </div>
+
+</div>

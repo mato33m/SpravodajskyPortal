@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+
+@if (user(); as u) {
+  <div class="profile-page">
+
+    <!-- ── HERO ── -->
+    <div class="profile-hero">
+      <div class="profile-avatar">{{ u.firstName.charAt(0) }}{{ u.lastName.charAt(0) }}</div>
+      <div class="profile-hero-info">
+        <h1>{{ u.firstName }} {{ u.lastName }}</h1>
+        <span class="profile-username">&#64;{{ u.username }}</span>
+        <span class="nav-role">{{ u.role }}</span>
+      </div>
+      @if (!editing() && canEdit()) {
+        <button class="btn-edit" (click)="startEdit()">Upraviť profil</button>
+      }
+    </div>
+
+    <div class="profile-layout">
+
+      <!-- ── INFO CARD ── -->
+      @if (!editing()) {
+        <div class="profile-card">
+          <div class="card-section">
+            <div class="section-title">O</div>
+            <p class="bio-text">{{ u.bio || 'No bio yet.' }}</p>
+          </div>
+          <div class="card-section">
+            <div class="section-title">Detaily</div>
+            <div class="info-row">
+              <span class="info-label">Email</span>
+              <span>{{ u.email || '—' }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Členom od</span>
+              <span>{{ u.dateJoined | date:'mediumDate' }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Status</span>
+              <span>{{ u.banned ? 'Banned' : 'Active' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── EDIT FORM ── -->
+      } @else {
+        <div class="profile-card">
+          <div class="section-title">Upraviť profil</div>
+
+          <div class="field">
+            <label>Meno</label>
+            <input [(ngModel)]="editForm.firstName" />
+          </div>
+          <div class="field">
+            <label>Priezvisko</label>
+            <input [(ngModel)]="editForm.lastName" />
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input [(ngModel)]="editForm.email" type="email" />
+          </div>
+          <div class="field">
+            <label>Bio</label>
+            <textarea [(ngModel)]="editForm.bio" rows="4"></textarea>
+          </div>
+          <div class="field">
+            <label>Nové heslo<span class="field-hint">(nechaj prázne ak nechceš zmeniť)</span></label>
+            <input [(ngModel)]="editForm.passwordHash" type="password" placeholder="••••••••" />
+          </div>
+
+          @if (saveError()) {
+            <div class="error">{{ saveError() }}</div>
+          }
+          @if (saveSuccess()) {
+            <div class="success">Profil bol úspešne upravený.</div>
+          }
+
+          <div class="form-actions">
+            <button class="btn-cancel" (click)="cancelEdit()">Zrušiť</button>
+            <button class="btn-save" (click)="saveEdit(u)" [disabled]="saving()">
+              {{ saving() ? 'Saving...' : 'Save Changes' }}
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+}

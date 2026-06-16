@@ -1,0 +1,179 @@
+.review-wrapper {
+  width: 100%;
+}
+
+/* ── FILTER BAR ────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 2px solid #e8edf5;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted, #7a8a9b);
+  cursor: pointer;
+  transition: all .18s;
+}
+
+.filter-btn:hover {
+  border-color: #b0c4e4;
+  color: var(--blue, #1a56db);
+}
+
+.filter-btn.active {
+  border-color: var(--blue, #1a56db);
+  background: #eef3ff;
+  color: var(--blue, #1a56db);
+}
+
+.badge {
+  background: #e8edf5;
+  color: #7a8a9b;
+  border-radius: 20px;
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.badge.draft { background: #fff3cd; color: #856404; }
+.badge.published { background: #d1e7dd; color: #0a5e30; }
+.badge.rejected { background: #f8d7da; color: #842029; }
+
+/* ── TABLE ─────────────────────────────────────────────── */
+.article-table-wrapper {
+  overflow-x: auto;
+}
+
+.article-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.article-table th {
+  text-align: left;
+  padding: 10px 14px;
+  background: #f6f8fc;
+  color: var(--muted, #7a8a9b);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 2px solid #e8edf5;
+}
+
+.article-table td {
+  padding: 14px;
+  border-bottom: 1px solid #f0f3f8;
+  vertical-align: top;
+}
+
+.article-table tr:last-child td {
+  border-bottom: none;
+}
+
+.article-table tr:hover td {
+  background: #fafbff;
+}
+
+.row-loading td {
+  opacity: .5;
+  pointer-events: none;
+}
+
+/* ── CELLS ─────────────────────────────────────────────── */
+.col-title { max-width: 280px; }
+.article-title {
+  font-weight: 600;
+  color: var(--text, #1a2332);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.article-preview {
+  color: var(--muted, #7a8a9b);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.author-name { font-weight: 600; color: var(--text, #1a2332); }
+.author-role { font-size: 11px; color: var(--muted, #7a8a9b); text-transform: uppercase; letter-spacing: .04em; }
+
+.topic-badge {
+  background: #eef3ff;
+  color: var(--blue, #1a56db);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.col-date { color: var(--muted, #7a8a9b); font-size: 12.5px; white-space: nowrap; }
+
+/* ── STATUS PILLS ──────────────────────────────────────── */
+.status-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.status-published { background: #d1e7dd; color: #0a5e30; }
+.status-draft     { background: #fff3cd; color: #856404; }
+.status-rejected  { background: #f8d7da; color: #842029; }
+
+/* ── ACTION BUTTONS ────────────────────────────────────── */
+.col-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 120px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s, transform .1s;
+  white-space: nowrap;
+}
+.action-btn:hover { opacity: .85; transform: scale(1.02); }
+
+.action-btn.publish   { background: #d1e7dd; color: #0a5e30; }
+.action-btn.reject    { background: #f8d7da; color: #842029; }
+.action-btn.draft-btn { background: #fff3cd; color: #856404; }
+.action-btn.delete    { background: #f0f3f8; color: #7a8a9b; }
+
+/* ── STATES ────────────────────────────────────────────── */
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--muted, #7a8a9b);
+}
+.empty-icon { font-size: 36px; display: block; margin-bottom: 10px; }
+
+.error-banner {
+  background: #f8d7da;
+  color: #842029;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 13.5px;
+}
+
+.spinner { font-size: 18px; }

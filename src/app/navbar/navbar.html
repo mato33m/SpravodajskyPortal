@@ -1,0 +1,39 @@
+<nav>
+  <div class="nav-inner">
+    <a routerLink="/articles" class="brand">
+      <span class="brand-logo">LRM</span>
+      <span class="brand-sub">Spravodajský portál</span>
+    </a>
+
+    @if (auth.currentUser()?.role === 'ADMIN') {
+      <a routerLink="/admin-screen" class="btn btn-white">
+        Admin panel
+      </a>
+    }
+
+
+    <div class="nav-right">
+      @if (auth.isLoggedIn()) {
+        <a [routerLink]="['/user', auth.currentUser()?.userId]" class="nav-user-link">
+      <span class="nav-user">
+        {{ auth.currentUser()?.username }}
+        <span class="nav-role">{{ auth.currentUser()?.role }}</span>
+      </span>
+        </a>
+
+        <button class="btn btn-outline" (click)="logout()">
+          Odhlásiť
+        </button>
+
+        @if (
+          auth.currentUser()?.role === 'EDITOR' ||
+          auth.currentUser()?.role === 'ADMIN'
+          ) {
+          <a routerLink="/create-article" class="btn btn-white">
+            Pridať článok
+          </a>
+        }
+      }
+    </div>
+  </div>
+</nav>

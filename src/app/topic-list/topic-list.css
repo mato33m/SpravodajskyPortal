@@ -1,0 +1,103 @@
+/* ── TOPIC & TAG LIST (shared style) ──────────────────── */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f3f8;
+}
+
+.list-item:last-of-type {
+  border-bottom: none;
+}
+
+.list-item input {
+  flex: 1;
+  padding: 8px 11px;
+  border: 1.5px solid #dde3ed;
+  border-radius: 7px;
+  font-size: 13.5px;
+  background: #f8fafd;
+  font-family: 'IBM Plex Sans', sans-serif;
+  transition: border-color .2s;
+}
+
+.list-item input:focus {
+  border-color: var(--blue);
+  background: #fff;
+}
+
+.btn-update {
+  padding: 7px 14px;
+  background: #eef3fb;
+  color: var(--blue);
+  border: 1.5px solid #c8d8f0;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  transition: all .2s;
+}
+
+.btn-update:hover {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+
+.btn-delete {
+  padding: 7px 14px;
+  background: #fff0f0;
+  color: #dc2626;
+  border: 1.5px solid #fca5a5;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  transition: all .2s;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+  color: #fff;
+  border-color: #dc2626;
+}
+
+/* ── ADD NEW ROW ──────────────────────────────────────── */
+.add-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 2px dashed #e8eef8;
+}
+
+.add-row input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1.5px solid #dde3ed;
+  border-radius: 7px;
+  font-size: 13.5px;
+  background: #f8fafd;
+  font-family: 'IBM Plex Sans', sans-serif;
+  transition: border-color .2s;
+}
+
+.add-row input:focus {
+  border-color: var(--blue);
+  background: #fff;
+}
+
+.btn-add {
+  padding: 9px 18px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background .2s;
+  white-space: nowrap;
+}
+
+.btn-add:hover {
+  background: #0052b4;
+}

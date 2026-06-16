@@ -1,0 +1,64 @@
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-chip.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.clear-tags-btn {
+  margin-top: 12px;
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-concept {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-rejected {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.my-articles-section {
+  margin-bottom: 32px;
+}
+
+.my-articles-section h2 {
+  margin: 0 0 16px 0;
+}
+
+.draft-card {
+  border-left: 4px solid #2563eb;
+}
+
+.draft-actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-link {
+  text-decoration: none;
+  font-weight: 600;
+  color: #2563eb;
+}
+

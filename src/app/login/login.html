@@ -1,0 +1,99 @@
+<div class="login-page">
+  <div class="login-logo">LRM</div>
+  <h1>Spravodajský portál</h1>
+  <p>{{ mode() === 'login' ? 'Prihlásenie do systému' : 'Vytvorenie účtu' }}</p>
+
+  <div class="card">
+
+    <!-- ── MODE TABS ── -->
+    <div class="login-tabs">
+      <button
+        class="login-tab"
+        [class.active]="mode() === 'login'"
+        (click)="switchMode('login')">
+        Prihlásenie
+      </button>
+      <button
+        class="login-tab"
+        [class.active]="mode() === 'register'"
+        (click)="switchMode('register')">
+        Registrácia
+      </button>
+    </div>
+
+    <!-- ── LOGIN FORM ── -->
+    @if (mode() === 'login') {
+      <h2>Vitajte späť</h2>
+      <p class="card-sub">Prihláste sa pre prístup k obsahu</p>
+
+      <div class="field">
+        <label>Používateľské meno</label>
+        <input type="text" [(ngModel)]="username" placeholder="Zadajte meno"
+               (keydown.enter)="submit()" />
+      </div>
+      <div class="field">
+        <label>Heslo</label>
+        <input type="password" [(ngModel)]="password" placeholder="Zadajte heslo"
+               (keydown.enter)="submit()" />
+      </div>
+
+      @if (error()) { <div class="error">{{ error() }}</div> }
+
+      <button class="btn-primary" (click)="submit()" [disabled]="loading() || !username || !password">
+        {{ loading() ? 'Prihlasovanie...' : 'Prihlásiť sa' }}
+      </button>
+
+      <div class="demo-box">
+        <strong>Testovacie účty</strong>
+        <span>Admin: <code>historyhub</code> / <code>admin123</code></span><br/>
+        <span>Editor: <code>science_daily</code> / <code>editor123</code></span><br/>
+        <span>Čitateľ: <code>citatel</code> / <code>123456</code></span>
+      </div>
+    }
+
+    <!-- ── REGISTER FORM ── -->
+    @if (mode() === 'register') {
+      <h2>Nový účet</h2>
+      <p class="card-sub">Zaregistrujte sa zadarmo</p>
+
+      <div class="field">
+        <label>Meno <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="regFirstName" placeholder="Zadajte meno"
+               (keydown.enter)="register()" />
+      </div>
+      <div class="field">
+        <label>Priezvisko <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="regLastName" placeholder="Zadajte priezvisko"
+               (keydown.enter)="register()" />
+      </div>
+      <div class="field">
+        <label>Používateľské meno <span class="required">*</span></label>
+        <input type="text" [(ngModel)]="regUsername" placeholder="Zadajte meno"
+               (keydown.enter)="register()" />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="regEmail" placeholder="vas@email.com"
+               (keydown.enter)="register()" />
+      </div>
+      <div class="field">
+        <label>Heslo <span class="required">*</span></label>
+        <input type="password" [(ngModel)]="regPassword" placeholder="Minimálne 6 znakov"
+               (keydown.enter)="register()" />
+      </div>
+      <div class="field">
+        <label>Potvrdenie hesla <span class="required">*</span></label>
+        <input type="password" [(ngModel)]="regPasswordConfirm" placeholder="Zopakujte heslo"
+               (keydown.enter)="register()" />
+      </div>
+
+      @if (error()) { <div class="error">{{ error() }}</div> }
+
+      <button class="btn-primary" (click)="register()"
+              [disabled]="loading() || !regUsername || !regPassword || !regFirstName || !regLastName">
+        {{ loading() ? 'Registrujem...' : 'Zaregistrovať sa' }}
+      </button>
+    }
+
+  </div>
+</div>

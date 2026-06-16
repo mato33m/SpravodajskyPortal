@@ -1,0 +1,15 @@
+<h2>Tagy</h2>
+
+@for (t of tags; track t.tagName) {
+  <div class="list-item">
+    <input #updatedName [value]="t.tagName" />
+    <button class="btn-update" (click)="onUpdate(t.tagName, updatedName.value)">Upraviť</button>
+    <button class="btn-delete" (click)="onDelete(t.tagName)">Zmazať</button>
+  </div>
+}
+<!-- pridavanie tagov pre admina
+<div class="add-row">
+  <input [(ngModel)]="newTagName" placeholder="Názov" />
+  <button class="btn-add" (click)="onAdd()">Pridať Tag</button>
+</div>
+-->

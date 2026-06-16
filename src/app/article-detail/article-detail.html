@@ -1,0 +1,189 @@
+<app-navbar></app-navbar>
+
+@if (article(); as a) {
+  <div class="hero" [style.backgroundImage]="'url('+a.imageUrl+')'">
+    <div class="hero-overlay">
+      <div class="hero-inner">
+
+        <div class="meta">
+          <span class="badge">{{ a.topicName }}</span>
+          <span class="date" style="color:rgba(255,255,255,.7)">
+            {{ fmt(a.releaseDate) }}
+          </span>
+        </div>
+
+        <h1>{{ a.title }}</h1>
+
+        <div class="hero-author">
+          <div class="avatar"></div>
+          <div>
+            <div class="avatar-name">
+              {{ a.writer.firstName }} {{ a.writer.lastName }}
+            </div>
+            <div class="avatar-label">
+              {{ a.writer.role }}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-layout">
+
+    <article class="article-body">
+
+      <div class="article-toolbar">
+        <a routerLink="/articles" class="back">← Späť na zoznam</a>
+
+        @if (canEditArticle()) {
+          <div class="article-actions">
+            <button
+              type="button"
+              class="btn-edit"
+              [routerLink]="['/edit-article', a.articleId]">
+              Upraviť článok
+            </button>
+
+            <button
+              type="button"
+              class="btn-delete"
+              (click)="deleteArticle()">
+              Zmazať článok
+            </button>
+          </div>
+        }
+      </div>
+
+      <div class="article-content">
+        {{ a.content }}
+      </div>
+
+      <div class="tags">
+        @for (t of a.tags; track t.tagName) {
+          <span class="tag-full">#{{ t.tagName }}</span>
+        }
+      </div>
+
+    </article>
+
+    <aside class="detail-sidebar">
+
+      <div class="box">
+        <p class="box-title">O článku</p>
+
+        <div class="info-row">
+          <span class="info-label">Autor</span>
+          <span>{{ a.writer.firstName }} {{ a.writer.lastName }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Rola</span>
+          <span>{{ a.writer.role }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Téma</span>
+          <span class="badge">{{ a.topicName }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Dátum</span>
+          <span>{{ fmt(a.releaseDate) }}</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Komentáre</span>
+          <span>{{ comments().length }}</span>
+        </div>
+      </div>
+
+      <div class="box">
+        <p class="box-title">Komentáre ({{ comments().length }})</p>
+
+        <div class="comments-list">
+          @if (!comments().length) {
+            <p class="no-comments">Zatiaľ žiadne komentáre.</p>
+          }
+
+          @for (c of comments(); track c.id) {
+            <div class="comment">
+              <div class="comment-header">
+                <div class="avatar" style="width:28px;height:28px;font-size:12px">
+                  {{ getAuthorName(c.authorId).charAt(0).toUpperCase() }}
+                </div>
+
+                <div>
+                  <a [routerLink]="['/user', c.authorId]" class="comment-author">
+                    {{ getAuthorName(c.authorId) }}
+                  </a>
+                  <br>
+                  <span class="comment-date">Hodnotenie: {{ c.rating }} ★</span>
+                </div>
+
+                @if (isAdmin()) {
+                  <div class="comment-admin-actions">
+                    <button class="btn-delete-comment" (click)="deleteComment(c.id)">
+                      Zmazať
+                    </button>
+                    <button class="btn-ban-user" (click)="banUser(c.authorId)">
+                      Ban
+                    </button>
+                  </div>
+                }
+              </div>
+
+              <p class="comment-text">{{ c.content }}</p>
+            </div>
+          }
+        </div>
+
+        @if (auth.isLoggedIn()) {
+          <div class="add-comment">
+            <h5>Pridať komentár</h5>
+
+            @if (ok()) {
+              <div class="success">Komentár bol pridaný.</div>
+            }
+
+            <div class="rating-select-container" style="margin-bottom: 8px;">
+              <label for="rating-select" style="font-size: 14px; margin-right: 8px;">Hodnotenie:</label>
+              <select
+                id="rating-select"
+                [ngModel]="selectedRating()"
+                (ngModelChange)="selectedRating.set(+$event)"
+                style="padding: 4px; border-radius: 4px; border: 1px solid #ccc;">
+                <option value="5">5 ★★★★★</option>
+                <option value="4">4 ★★★★</option>
+                <option value="3">3 ★★★</option>
+                <option value="2">2 ★★</option>
+                <option value="1">1 ★</option>
+              </select>
+            </div>
+
+            <textarea
+              [(ngModel)]="text"
+              rows="3"
+              placeholder="Napíšte komentár...">
+            </textarea>
+
+            <button
+              class="btn-comment"
+              (click)="addComment()"
+              [disabled]="!text.trim()">
+              Odoslať
+            </button>
+          </div>
+        } @else {
+          <div class="login-prompt">
+            <a routerLink="/login">Prihláste sa</a> pre pridanie komentára.
+          </div>
+        }
+
+      </div>
+
+    </aside>
+
+  </div>
+}

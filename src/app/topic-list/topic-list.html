@@ -1,0 +1,14 @@
+<h2>Témy</h2>
+
+@for (t of topics; track t.topicName) {
+  <div class="list-item">
+    <input #updatedName [value]="t.topicName" />
+    <button class="btn-update" (click)="onUpdate(t.topicName, updatedName.value)">Upraviť</button>
+    <button class="btn-delete" (click)="onDelete(t.topicName)">Zmazať</button>
+  </div>
+}
+
+<div class="add-row">
+  <input [(ngModel)]="newTopicName" placeholder="Názov" />
+  <button class="btn-add" (click)="onAdd()">Pridať tému</button>
+</div>

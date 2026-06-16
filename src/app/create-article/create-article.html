@@ -1,0 +1,73 @@
+<div class="article-form-container">
+  <div class="article-form-card">
+
+    <a routerLink="/articles" class="back-link">
+      ← Späť na články
+    </a>
+
+    <h1>Vytvoriť článok</h1>
+    <p class="subtitle">
+      Publikujte nový článok pre čitateľov portálu.
+    </p>
+
+    <form (ngSubmit)="createArticle()">
+
+      <div class="form-group">
+        <label>Nadpis</label>
+        <input
+          type="text"
+          [(ngModel)]="article.title"
+          name="title"
+          placeholder="Zadajte nadpis článku"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label>Téma</label>
+        <select
+          [(ngModel)]="article.topicName"
+          name="topicName">
+          <option value="Technológie">Technika</option>
+          <option value="Veda">Veda</option>
+          <option value="História">História</option>
+          <option value="Svetové správy">Svetové novinky</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>URL obrázka</label>
+        <input
+          type="text"
+          [(ngModel)]="article.imageUrl"
+          name="imageUrl"
+          placeholder="https://...">
+      </div>
+
+
+      <div class="form-group">
+        <label>Tagy</label>
+        <input
+          type="text"
+          [(ngModel)]="tagInput"
+          name="tags"
+          placeholder="politika, história, svet">
+        <small class="hint">Oddel tagy čiarkou.</small>
+      </div>
+
+      <div class="form-group">
+        <label>Obsah článku</label>
+        <textarea
+          [(ngModel)]="article.content"
+          name="content"
+          placeholder="Napíšte obsah článku..."
+          required>
+        </textarea>
+      </div>
+
+      <button type="submit" class="publish-btn">
+        Publikovať článok
+      </button>
+
+    </form>
+  </div>
+</div>

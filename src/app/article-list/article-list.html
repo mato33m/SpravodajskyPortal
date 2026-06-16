@@ -1,0 +1,182 @@
+<app-navbar></app-navbar>
+
+<div class="topic-bar">
+  <div class="topic-bar-inner">
+
+    <button class="topic-btn"
+            [class.active]="!topicId()"
+            (click)="setTopic()">
+      Všetky
+    </button>
+
+    @for (t of topics(); track t.topicName) {
+      <button class="topic-btn"
+              [class.active]="topicId() === t.topicName"
+              (click)="setTopic(t.topicName)">
+        {{ topicLabel(t.topicName) }}
+      </button>
+    }
+
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+
+    <div class="box">
+      <p class="box-title">Hľadať</p>
+      <input class="search-input"
+             [(ngModel)]="q"
+             (input)="onSearchInput()"
+             placeholder="Hľadať článok..." />
+    </div>
+
+    <div class="box">
+      <p class="box-title">Tagy</p>
+
+      <div class="tag-cloud">
+        @for (tag of tags(); track tag.tagName) {
+          <button class="tag-chip"
+                  [class.active]="isTagSelected(tag.tagName)"
+                  (click)="toggleTag(tag.tagName)">
+            #{{ tag.tagName }}
+          </button>
+        }
+      </div>
+
+      @if (selectedTags().length > 0) {
+        <button class="clear-tags-btn" (click)="clearTags()">
+          Vymazať filtre
+        </button>
+      }
+    </div>
+
+  </aside>
+
+  <main class="articles">
+
+    @if (isEditor() && myArticles().length) {
+      <section class="my-articles-section">
+        <h2>Moje koncepty a zamietnuté</h2>
+
+        <div class="grid">
+          @for (a of myArticles(); track a.articleId) {
+            <div class="article-card draft-card">
+
+              <div class="card-body">
+
+                <div class="meta">
+                  <span class="status-badge"
+                        [class.status-concept]="a.status === 'CONCEPT'"
+                        [class.status-rejected]="a.status === 'REJECTED'">
+                    {{ statusLabel(a.status) }}
+                  </span>
+                  <span class="badge">{{ topicLabel(a.topicName) }}</span>
+                  <span class="date">{{ fmt(a.releaseDate) }}</span>
+                </div>
+
+                <h3>{{ a.title }}</h3>
+
+                <p class="card-perex">{{ a.content }}</p>
+
+                <div class="footer-meta">
+                  <span>💬 {{ a.comments.length }}</span>
+
+                  @for (t of a.tags; track t.tagName) {
+                    <span class="tag-sm">#{{ t.tagName }}</span>
+                  }
+                </div>
+
+                <div class="draft-actions">
+                  <a [routerLink]="['/edit-article', a.articleId]" class="edit-link">
+                    Upraviť
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    @if (!articles().length) {
+      <p style="color:var(--muted)">Žiadne články.</p>
+    }
+
+    @if (articles()[0]; as a) {
+      <a [routerLink]="['/articles', a.articleId]" class="article-link">
+
+        <div class="article-featured">
+
+          <div class="feat-img"
+               [style.backgroundImage]="'url(' + a.imageUrl + ')'">
+          </div>
+
+          <div class="feat-body">
+
+            <div class="meta">
+              <span class="badge">{{ topicLabel(a.topicName) }}</span>
+              <span class="date">{{ fmt(a.releaseDate) }}</span>
+            </div>
+
+            <h2>{{ a.title }}</h2>
+
+            <p class="feat-perex">{{ a.content }}</p>
+
+            <div class="footer-meta">
+              <span>💬 {{ a.comments.length }}</span>
+
+              @for (t of a.tags; track t.tagName) {
+                <span class="tag-sm">#{{ t.tagName }}</span>
+              }
+            </div>
+
+          </div>
+        </div>
+
+      </a>
+    }
+
+    <div class="grid">
+
+      @for (a of articles().slice(1); track a.articleId) {
+        <a [routerLink]="['/articles', a.articleId]" class="article-link">
+
+          <div class="article-card">
+
+            <div class="card-img"
+                 [style.backgroundImage]="'url(' + a.imageUrl + ')'">
+            </div>
+
+            <div class="card-body">
+
+              <div class="meta">
+                <span class="badge">{{ topicLabel(a.topicName) }}</span>
+                <span class="date">{{ fmt(a.releaseDate) }}</span>
+              </div>
+
+              <h3>{{ a.title }}</h3>
+
+              <p class="card-perex">{{ a.content }}</p>
+
+              <div class="footer-meta">
+                <span>💬 {{ a.comments.length }}</span>
+
+                @for (t of a.tags; track t.tagName) {
+                  <span class="tag-sm">#{{ t.tagName }}</span>
+                }
+              </div>
+
+            </div>
+
+          </div>
+
+        </a>
+      }
+
+    </div>
+
+  </main>
+</div>

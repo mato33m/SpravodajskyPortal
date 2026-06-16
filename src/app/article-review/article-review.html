@@ -1,0 +1,93 @@
+<div class="review-wrapper">
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <button class="filter-btn" [class.active]="filterStatus() === 'ALL'" (click)="filterStatus.set('ALL')">
+      Všetky <span class="badge">{{ articles().length }}</span>
+    </button>
+    <button class="filter-btn draft" [class.active]="filterStatus() === 'CONCEPT'" (click)="filterStatus.set('CONCEPT')">
+      Koncepty <span class="badge draft">{{ countByStatus('CONCEPT') }}</span>
+    </button>
+    <button class="filter-btn published" [class.active]="filterStatus() === 'PUBLISHED'" (click)="filterStatus.set('PUBLISHED')">
+      Zverejnené <span class="badge published">{{ countByStatus('PUBLISHED') }}</span>
+    </button>
+    <button class="filter-btn rejected" [class.active]="filterStatus() === 'REJECTED'" (click)="filterStatus.set('REJECTED')">
+      Zamietnuté <span class="badge rejected">{{ countByStatus('REJECTED') }}</span>
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="error-banner">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading-state">Načítavanie článkov...</div>
+  } @else if (filtered.length === 0) {
+    <div class="empty-state">
+      <span class="empty-icon">📭</span>
+      <p>Žiadne články v tejto kategórii</p>
+    </div>
+  } @else {
+    <div class="article-table-wrapper">
+      <table class="article-table">
+        <thead>
+        <tr>
+          <th>Článok</th>
+          <th>Autor</th>
+          <th>Téma</th>
+          <th>Dátum</th>
+          <th>Stav</th>
+          <th>Akcie</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (article of filtered; track article.articleId) {
+            <tr [class.row-loading]="actionInProgress() === article.articleId">
+              <td class="col-title">
+                <div class="article-title">{{ article.title }}</div>
+                <div class="article-preview">{{ article.content | slice:0:80 }}...</div>
+              </td>
+              <td class="col-author">
+                <div class="author-name">{{ article.writer.firstName }} {{ article.writer.lastName }}</div>
+                <div class="author-role">{{ article.writer.role }}</div>
+              </td>
+              <td class="col-topic">
+                <span class="topic-badge">{{ article.topicName }}</span>
+              </td>
+              <td class="col-date">{{ formatDate(article.releaseDate) }}</td>
+              <td class="col-status">
+                <span class="status-pill" [class]="'status-' + article.status.toLowerCase()">
+                  {{ statusLabel(article.status) }}
+                </span>
+              </td>
+              <td class="col-actions">
+                @if (actionInProgress() === article.articleId) {
+                  <span class="spinner">⏳</span>
+                } @else {
+                  @if (article.status !== 'PUBLISHED') {
+                    <button class="action-btn publish" (click)="publish(article)" title="Zverejniť">
+                      ✅ Zverejniť
+                    </button>
+                  }
+                  @if (article.status !== 'REJECTED') {
+                    <button class="action-btn reject" (click)="reject(article)" title="Zamietnuť">
+                      ❌ Zamietnuť
+                    </button>
+                  }
+                  @if (article.status !== 'CONCEPT') {
+                    <button class="action-btn draft-btn" (click)="setDraft(article)" title="Vrátiť do konceptu">
+                      📝 Koncept
+                    </button>
+                  }
+                  <button class="action-btn delete" (click)="deleteArticle(article)" title="Zmazať">
+                    🗑️
+                  </button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

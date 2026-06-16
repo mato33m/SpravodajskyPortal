@@ -1,0 +1,55 @@
+<app-navbar></app-navbar>
+
+<div class="admin-page">
+  <div class="admin-header">
+    <h1>Admin Panel</h1>
+    <p>Správa článkov, tém, tagov a používateľov</p>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn" [class.active]="activeTab() === 'articles'" (click)="activeTab.set('articles')">
+      Posúdenie článkov
+    </button>
+    <button class="tab-btn" [class.active]="activeTab() === 'topics'" (click)="activeTab.set('topics')">
+      Témy
+    </button>
+    <button class="tab-btn" [class.active]="activeTab() === 'tags'" (click)="activeTab.set('tags')">
+      Tagy
+    </button>
+    <button class="tab-btn" [class.active]="activeTab() === 'users'" (click)="activeTab.set('users')">
+      Používatelia
+    </button>
+  </div>
+
+  <div class="panel">
+    @if (activeTab() === 'articles') {
+      <h2>Posúdenie článkov</h2>
+      <app-article-review></app-article-review>
+    }
+    @if (activeTab() === 'topics') {
+      <app-topic-list
+        [topics]="topics()"
+        (created)="onTopicCreated($event)"
+        (updated)="onTopicUpdated($event)"
+        (deleted)="onTopicDeleted($event)">
+      </app-topic-list>
+    }
+    @if (activeTab() === 'tags') {
+      <app-tag-list
+        [tags]="tags()"
+        (created)="onTagCreated($event)"
+        (updated)="onTagUpdated($event)"
+        (deleted)="onTagDeleted($event)">
+      </app-tag-list>
+    }
+    @if (activeTab() === 'users') {
+      <app-user-list
+        [users]="users()"
+        (deleted)="onUserDeleted($event)"
+        (banned)="onUserBanned($event)"
+        (unbanned)="onUserUnbanned($event)"
+        (roleChanged)="onRoleChanged($event)">
+      </app-user-list>
+    }
+  </div>
+</div>
